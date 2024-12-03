@@ -1,0 +1,46 @@
+<!-- schedule.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Agendar Aula</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- FullCalendar CSS -->
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+</head>
+<body>
+    <header>
+        <h1>Agende sua Aula</h1>
+    </header>
+
+    <main>
+        <div id='calendar'></div>
+    </main>
+
+    <!-- Popup para exibir o total e botão do WhatsApp -->
+    <div id="popup">
+        <div id="popup-content">
+            <span id="close-button" onclick="closePopup()">&times;</span>
+            <p id="popup-total"></p>
+            <a id="whatsapp-button" href="#" target="_blank">
+                <img src="assets/images/whatsapp-icon.png" alt="WhatsApp" />
+                Entrar em Contato
+            </a>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <!-- FullCalendar JS -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.min.js'></script>
+    <!-- Moment.js -->
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
+    <!-- Seu script de configuração do Firebase -->
+    <script src="js/firebase.js"></script>
+    <!-- Seu script personalizado -->
+    <script src="js/calendar.js"></script>
+</body>
+</html>
