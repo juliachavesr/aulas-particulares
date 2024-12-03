@@ -15,15 +15,30 @@
     <!-- FullCalendar CSS -->
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
 </head>
-<body>
-    <header>
-        <h1>Editar Disponibilidade</h1>
-        <button id="logout-button">Sair</button>
-    </header>
+<body class="edit-page">
+    <div class="container">
+        <header>
+            <h1>Editar Disponibilidade</h1>
+            <button id="logout-button">Sair</button>
+        </header>
 
-    <main>
-        <div id='calendar'></div>
-    </main>
+        <main>
+            <div id='calendar'></div>
+            <button id="register-availability-button" class="hidden" onclick="openRegisterPopup()">Registrar</button>
+        </main>
+
+        <!-- Popup para inserir o nome do evento -->
+        <div id="register-popup" class="popup">
+            <div class="popup-content">
+                <span class="close-button" onclick="closeRegisterPopup()">&times;</span>
+                <h2>Registrar Disponibilidade</h2>
+                <input type="text" id="event-title" placeholder="Nome do Evento" />
+                <div class="popup-actions">
+                    <button onclick="registerEvent()">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <!-- Firebase -->

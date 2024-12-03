@@ -7,13 +7,18 @@ function isMobile() {
 
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
+    var requestButton = document.getElementById('request-appointment-button');
+    var appointmentPopup = document.getElementById('appointment-popup');
+    var appointmentSummary = document.getElementById('appointment-summary');
+    var totalValue = document.getElementById('total-value');
+    var contactButton = document.getElementById('contact-button');
 
-    // Determina a visualização inicial com base no tamanho da tela
-    var initialView = isMobile() ? 'timeGridDay' : 'timeGridWeek';
+    // Array para armazenar as seleções
+    var selectedSlots = [];
 
     // Inicializa o calendário
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: initialView,
+        initialView: isMobile() ? 'timeGridDay' : 'timeGridWeek',
         locale: 'pt-br',
         timeZone: 'local',
         height: 'auto',
@@ -30,38 +35,52 @@ document.addEventListener('DOMContentLoaded', function() {
         selectable: true,
         selectOverlap: false,
         eventOverlap: false,
-        longPressDelay: 0, // Permite seleção imediata em dispositivos móveis
-        selectLongPressDelay: 0, // Garantia adicional para seleção imediata
         select: function(info) {
-            // Calcula a duração em horas
-            var start = moment(info.start);
-            var end = moment(info.end);
-            var duration = moment.duration(end.diff(start));
-            var hours = duration.asHours();
+            // Verifica se já há um slot selecionado na faixa
+            var overlap = selectedSlots.some(function(slot) {
+                return (info.start < slot.end && info.end > slot.start);
+            });
 
-            // Calcula o total
-            var total = hours * 50; // R$ 50,00 por hora
+            if (overlap) {
+                alert('Esse horário já está selecionado.');
+                calendar.unselect();
+                return;
+            }
 
-            // Formata as datas e horas para exibir no WhatsApp
-            var startFormatted = start.format('DD/MM/YYYY HH:mm');
-            var endFormatted = end.format('DD/MM/YYYY HH:mm');
+            // Adiciona o slot à lista de seleções
+            selectedSlots.push({ start: info.start, end: info.end });
 
-            // Mensagem para o WhatsApp
-            var whatsappMessage = encodeURIComponent(
-                `Olá, gostaria de agendar uma aula.\n` +
-                `Data e Hora: ${startFormatted} até ${endFormatted}\n` +
-                `Total de horas: ${hours}\n` +
-                `Valor total: R$ ${total.toFixed(2)}`
-            );
+            // Adiciona um evento de fundo para destacar a seleção
+            calendar.addEvent({
+                title: 'Selecionado',
+                start: info.start,
+                end: info.end,
+                allDay: false,
+                display: 'background',
+                backgroundColor: '#ffb3d9',
+                overlap: false
+            });
 
-            // URL do WhatsApp com o número da professora e a mensagem
-            var whatsappNumber = '+5581999298108'; // Substitua pelo número da professora
-            var whatsappURL = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
-
-            // Exibe o popup com o total e o botão do WhatsApp
-            showPopup(total.toFixed(2), whatsappURL);
+            // Mostra o botão de solicitar agendamento
+            requestButton.classList.remove('hidden');
 
             calendar.unselect();
+        },
+        eventClick: function(info) {
+            if (info.event.title === 'Selecionado') {
+                // Remove da lista de seleções
+                selectedSlots = selectedSlots.filter(function(slot) {
+                    return !(slot.start.getTime() === info.event.start.getTime() && slot.end.getTime() === info.event.end.getTime());
+                });
+
+                // Remove o evento do calendário
+                info.event.remove();
+
+                // Oculta o botão se não houver mais seleções
+                if (selectedSlots.length === 0) {
+                    requestButton.classList.add('hidden');
+                }
+            }
         },
         events: []
     });
@@ -85,28 +104,61 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Remove todos os eventos atuais
-        calendar.removeAllEvents();
+        // Remove todos os eventos atuais, exceto os "Selecionado"
+        calendar.getEvents().forEach(function(event) {
+            if (event.title !== 'Selecionado') {
+                event.remove();
+            }
+        });
 
         // Adiciona os eventos carregados
         calendar.addEventSource(events);
     });
+
+    // Função para abrir o popup de agendamento
+    window.openAppointmentPopup = function() {
+        if (selectedSlots.length === 0) {
+            alert('Por favor, selecione pelo menos um horário.');
+            return;
+        }
+
+        var summaryText = '';
+        var total = 0;
+
+        selectedSlots.forEach(function(slot) {
+            var start = moment(slot.start).format('DD/MM/YYYY HH:mm');
+            var end = moment(slot.end).format('DD/MM/YYYY HH:mm');
+            summaryText += `Data e Hora: ${start} até ${end}\n`;
+            var duration = moment.duration(slot.end - slot.start);
+            var hours = duration.asHours();
+            total += hours * 50; // R$ 50,00 por hora
+        });
+
+        appointmentSummary.textContent = summaryText;
+        totalValue.textContent = `Valor Total: R$ ${total.toFixed(2)}`;
+
+        // Gera a mensagem para o botão de contato
+        var whatsappMessage = encodeURIComponent(
+            `Olá, gostaria de agendar uma aula.\n\n` +
+            `${summaryText}\n` +
+            `Valor total: R$ ${total.toFixed(2)}`
+        );
+
+        var whatsappNumber = '+5581999298108'; // Substitua pelo número da professora
+        var whatsappURL = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+        contactButton.href = whatsappURL;
+
+        // Exibe o popup
+        appointmentPopup.classList.add('show');
+    };
+
+    // Função para fechar o popup de agendamento
+    window.closeAppointmentPopup = function() {
+        appointmentPopup.classList.remove('show');
+    };
+
+    // Função para modificar a seleção (fechar o popup)
+    window.modifySelection = function() {
+        closeAppointmentPopup();
+    };
 });
-
-// Função para exibir o popup com o total e botão do WhatsApp
-function showPopup(total, whatsappURL) {
-    var popup = document.getElementById('popup');
-    var popupTotal = document.getElementById('popup-total');
-    var whatsappButton = document.getElementById('whatsapp-button');
-
-    popupTotal.textContent = 'Total: R$ ' + total;
-    whatsappButton.href = whatsappURL;
-
-    popup.classList.add('show');
-}
-
-// Função para fechar o popup
-function closePopup() {
-    var popup = document.getElementById('popup');
-    popup.classList.remove('show');
-}

@@ -1,17 +1,19 @@
 /* css/style.css */
 
-/* Estilos globais */
+/* Reset e estilos globais */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Estilos globais */
 html, body {
     font-family: 'Poppins', sans-serif;
     background-color: #f9f9f9;
     color: #333;
     height: 100%;
+    overflow-x: hidden;
 }
 
 body {
@@ -35,6 +37,7 @@ header {
     background-color: #ffb3d9;
     text-align: center;
     padding: 40px 20px;
+    position: relative;
 }
 
 .profile-picture {
@@ -58,12 +61,18 @@ header p {
     margin-bottom: 20px;
 }
 
+.contact-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
 .contact-button {
     display: inline-block;
     background-color: #ff66a3;
     color: #fff;
     padding: 10px 20px;
-    margin: 5px 5px 15px;
     border-radius: 25px;
     text-decoration: none;
     font-size: 0.9em;
@@ -74,7 +83,8 @@ header p {
     background-color: #e60073;
 }
 
-#schedule-button {
+#schedule-button,
+#logout-button {
     background-color: #fff;
     color: #ff66a3;
     border: 2px solid #ff66a3;
@@ -85,7 +95,8 @@ header p {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-#schedule-button:hover {
+#schedule-button:hover,
+#logout-button:hover {
     background-color: #ff66a3;
     color: #fff;
 }
@@ -96,6 +107,7 @@ main {
     padding: 30px 20px;
 }
 
+/* Estilos das disciplinas */
 .subjects h2 {
     text-align: center;
     font-size: 1.5em;
@@ -129,7 +141,7 @@ footer {
 }
 
 /* Estilos para formulários (login.html) */
-form {
+.login-form {
     max-width: 400px;
     margin: 50px auto;
     background-color: #fff;
@@ -138,13 +150,13 @@ form {
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-form h2 {
+.login-form h2 {
     text-align: center;
     margin-bottom: 20px;
     color: #cc0066;
 }
 
-form input {
+.login-form input {
     width: 100%;
     padding: 12px 15px;
     margin: 10px 0;
@@ -155,11 +167,11 @@ form input {
     color: #333;
 }
 
-form input:focus {
+.login-form input:focus {
     border: 2px solid #ff66a3;
 }
 
-form button {
+.login-form button {
     width: 100%;
     margin-top: 20px;
     background-color: #ff66a3;
@@ -172,7 +184,7 @@ form button {
     transition: background-color 0.3s ease;
 }
 
-form button:hover {
+.login-form button:hover {
     background-color: #e60073;
 }
 
@@ -187,6 +199,7 @@ form button:hover {
     margin: 0 auto;
 }
 
+/* FullCalendar customizado */
 .fc {
     font-family: 'Poppins', sans-serif;
 }
@@ -260,14 +273,9 @@ form button:hover {
     opacity: 0.3;
 }
 
-/* Estilos para o botão "Agendar" */
-#confirm-schedule-button,
-#confirm-changes-button {
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+/* Botões de solicitação e registro */
+#request-appointment-button,
+#register-availability-button {
     background-color: #ff66a3;
     color: #fff;
     border: none;
@@ -275,22 +283,21 @@ form button:hover {
     font-size: 1em;
     border-radius: 25px;
     cursor: pointer;
+    margin-top: 20px;
     transition: background-color 0.3s ease;
-    z-index: 1000;
 }
 
-#confirm-schedule-button:hover,
-#confirm-changes-button:hover {
+#request-appointment-button:hover,
+#register-availability-button:hover {
     background-color: #e60073;
 }
 
-#confirm-schedule-button.show,
-#confirm-changes-button.show {
-    display: block;
+.hidden {
+    display: none;
 }
 
-/* Estilos para o popup */
-#popup {
+/* Estilos para os popups */
+.popup {
     display: none;
     position: fixed;
     top: 0;
@@ -300,16 +307,16 @@ form button:hover {
     background-color: rgba(0,0,0,0.5);
     justify-content: center;
     align-items: center;
-    z-index: 999;
+    z-index: 1000;
 }
 
-#popup.show {
+.popup.show {
     display: flex;
 }
 
-#popup-content {
+.popup-content {
     background-color: #fff;
-    padding: 20px;
+    padding: 20px 30px;
     border-radius: 15px;
     text-align: center;
     position: relative;
@@ -317,7 +324,7 @@ form button:hover {
     max-width: 400px;
 }
 
-#close-button {
+.close-button {
     position: absolute;
     top: 10px;
     right: 15px;
@@ -325,32 +332,35 @@ form button:hover {
     cursor: pointer;
 }
 
-#popup-total {
-    font-size: 1.2em;
-    margin-bottom: 20px;
-    color: #cc0066;
+.popup-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
 }
 
-#whatsapp-button {
-    display: inline-flex;
-    align-items: center;
-    background-color: #25D366;
+.popup-actions button,
+.popup-actions a {
+    background-color: #ff66a3;
     color: #fff;
+    border: none;
     padding: 10px 20px;
     border-radius: 25px;
+    font-size: 0.9em;
+    cursor: pointer;
     text-decoration: none;
-    font-size: 1em;
     transition: background-color 0.3s ease;
 }
 
-#whatsapp-button:hover {
-    background-color: #128C7E;
+.popup-actions button:hover,
+.popup-actions a:hover {
+    background-color: #e60073;
 }
 
-#whatsapp-button img {
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
+#total-value {
+    font-size: 1.2em;
+    color: #cc0066;
 }
 
 /* Estilos para o botão de logout (edit.html) */
@@ -359,36 +369,17 @@ form button:hover {
     top: 20px;
     right: 20px;
     background-color: #e60073;
+    color: #fff;
+    border: none;
     padding: 10px 20px;
     font-size: 1em;
-    border: none;
     border-radius: 25px;
-    color: #fff;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 #logout-button:hover {
     background-color: #cc0066;
-}
-
-/* Estilos dos botões gerais */
-button {
-    cursor: pointer;
-}
-
-button:hover {
-    opacity: 0.9;
-}
-
-/* Estilos dos links */
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-a:hover {
-    color: #cc0066;
 }
 
 /* Responsividade */
@@ -413,7 +404,8 @@ a:hover {
         font-size: 0.8em;
     }
 
-    #schedule-button {
+    #schedule-button,
+    #logout-button {
         padding: 10px 20px;
         font-size: 0.9em;
     }
@@ -427,17 +419,17 @@ a:hover {
         font-size: 0.8em;
     }
 
-    form {
+    .login-form {
         margin: 30px auto;
         padding: 20px 25px;
     }
 
-    form input {
+    .login-form input {
         padding: 10px 12px;
         font-size: 0.9em;
     }
 
-    form button {
+    .login-form button {
         padding: 10px 20px;
         font-size: 0.9em;
     }
@@ -468,15 +460,150 @@ a:hover {
         font-size: 1em;
     }
 
-    #whatsapp-button {
+    #whatsapp-button,
+    #contact-button {
         font-size: 0.9em;
         padding: 8px 15px;
     }
 
-    #confirm-schedule-button,
-    #confirm-changes-button {
+    #request-appointment-button,
+    #register-availability-button {
         width: 90%;
         padding: 10px 20px;
         font-size: 0.9em;
     }
+
+    /* Estilos para os popups específicos */
+    #appointment-popup .popup-actions a {
+        background-color: #25D366;
+    }
+
+    #appointment-popup .popup-actions a:hover {
+        background-color: #128C7E;
+    }
+
+    #register-popup .popup-actions button {
+        background-color: #ff66a3;
+    }
+
+    #register-popup .popup-actions button:hover {
+        background-color: #e60073;
+    }
+}
+/* Estilos para o popup */
+#popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#popup.show {
+    display: flex;
+}
+
+#popup-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+}
+
+#popup-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#popup-content label {
+    font-size: 1em;
+    color: #333;
+    text-align: left;
+}
+
+#popup-content input[type="text"],
+#popup-content textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ff80bf;
+    border-radius: 5px;
+    font-size: 1em;
+    outline: none;
+}
+
+#popup-content input[type="text"]:focus,
+#popup-content textarea:focus {
+    border-color: #ff66a3;
+}
+
+#popup-total {
+    font-size: 1.2em;
+    color: #cc0066;
+    margin-top: 10px;
+}
+
+#whatsapp-button {
+    display: inline-flex;
+    align-items: center;
+    background-color: #25D366;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+#whatsapp-button:hover {
+    background-color: #128C7E;
+}
+
+#whatsapp-button img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+#close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+/* Botão "Confirmar Agendamento" */
+#confirm-schedule-button {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ff66a3;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1em;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    z-index: 1000;
+}
+
+#confirm-schedule-button.show {
+    display: block;
+}
+
+#confirm-schedule-button:hover {
+    background-color: #e60073;
 }
