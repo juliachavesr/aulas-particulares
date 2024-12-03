@@ -9,47 +9,42 @@
 
 html, body {
     height: 100%;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9f9f9;
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #ffe6f2;
-    color: #4a4a4a;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
 }
 
 /* Estilos do header */
 header {
     background-color: #ffb3d9;
-    padding: 20px;
+    padding: 15px;
     text-align: center;
-    position: relative;
 }
 
 header h1 {
-    font-size: 2.5em;
+    font-size: 2em;
     color: #fff;
 }
 
-/* Estilos do botão de logout */
 #logout-button {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: #e60073;
-    padding: 10px 20px;
-    font-size: 1em;
-    border: none;
-    border-radius: 25px;
+    top: 15px;
+    right: 15px;
+    background-color: #ff66a3;
     color: #fff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1em;
+    border-radius: 25px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
 #logout-button:hover {
-    background-color: #cc0066;
+    background-color: #e60073;
 }
 
 /* Estilos do main */
@@ -57,81 +52,23 @@ main {
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 20px;
 }
 
-/* Estilos do footer */
-footer {
-    background-color: #ffb3d9;
-    text-align: center;
-    padding: 10px;
-    color: #fff;
-}
-
-/* Estilos dos botões */
-button {
-    background-color: #ff66a3;
-    color: #fff;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 25px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #e60073;
-}
-
-/* Estilos dos links */
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-a:hover {
-    color: #cc0066;
-}
-
-/* Estilos dos formulários */
-form {
-    max-width: 400px;
-    margin: auto;
-    background-color: #fff;
-    padding: 30px 40px;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-form input {
-    width: 100%;
-    padding: 12px 15px;
-    margin: 10px 0;
-    border: 1px solid #ff80bf;
-    border-radius: 25px;
-    font-size: 1em;
-    outline: none;
-    color: #333;
-}
-
-form input:focus {
-    border: 2px solid #ff66a3;
-}
-
-form button {
-    width: 100%;
-    margin-top: 20px;
-}
-
-/* Estilos do calendário */
 #calendar {
     flex: 1;
-    margin: 20px 0;
+    width: 100%;
 }
 
+/* Estilos do FullCalendar */
 .fc {
     font-family: 'Poppins', sans-serif;
+}
+
+.fc-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
 
 .fc-toolbar-title {
@@ -146,17 +83,13 @@ form button {
     padding: 10px 15px;
     border-radius: 25px;
     font-size: 1em;
+    margin: 5px;
+    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .fc-button:hover {
     background-color: #e60073;
-}
-
-.fc-button-primary:not(:disabled).fc-button-active,
-.fc-button-primary:not(:disabled):active {
-    background-color: #e60073;
-    box-shadow: none;
 }
 
 .fc-event {
@@ -168,54 +101,36 @@ form button {
     padding: 2px 5px;
 }
 
-@media (max-width: 768px) {
-    .fc-timegrid {
-        height: calc(100vh - 150px); /* Ajuste para dispositivos menores */
-    }
-
-    .fc-timegrid-slot {
-        min-height: 60px; /* Altura menor para dispositivos móveis */
-    }
-}
-
-
-.fc .fc-col-header-cell-cushion {
-    font-weight: bold;
+.fc .fc-daygrid-day-number,
+.fc .fc-timegrid-slot-label {
     color: #cc0066;
 }
 
-.fc .fc-daygrid-day-number {
-    color: #cc0066;
-}
-
-
-
-/* Estilos para o popup */
+/* Popup */
 #popup {
-    display: none; /* Inicialmente oculto */
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5); /* Fundo semi-transparente */
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
 }
 
 #popup.show {
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #popup-content {
     background-color: #fff;
-    padding: 30px;
-    border-radius: 15px;
+    padding: 20px;
+    border-radius: 10px;
     text-align: center;
     position: relative;
-    width: 80%;
-    max-width: 400px;
+    max-width: 90%;
 }
 
 #close-button {
@@ -227,331 +142,72 @@ form button {
 }
 
 #popup-total {
-    font-size: 1.5em;
+    font-size: 1.2em;
     margin-bottom: 20px;
-    color: #cc0066;
 }
 
 #whatsapp-button {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     background-color: #25D366;
     color: #fff;
-    padding: 12px 25px;
+    padding: 10px 20px;
     border-radius: 25px;
     text-decoration: none;
-    font-size: 1.2em;
-    transition: background-color 0.3s ease;
-}
-
-#whatsapp-button:hover {
-    background-color: #128C7E;
+    font-size: 1em;
 }
 
 #whatsapp-button img {
     width: 24px;
-    vertical-align: middle;
+    height: 24px;
     margin-right: 10px;
 }
 
-/* Estilos para o total do agendamento */
-#total-display {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #ff66a3;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 25px;
-    font-size: 1.2em;
-    display: none; /* Inicialmente oculto */
-}
-
-#total-display.show {
-    display: block;
-}
-
-/* Estilos para o botão "Agendar" */
-#agendar-button {
-    display: none; /* Inicialmente oculto */
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background-color: #ff66a3;
-    color: #fff;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 25px;
-    font-size: 1.2em;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    z-index: 1000;
-}
-
-#agendar-button.show {
-    display: block;
-}
-
-#agendar-button:hover {
-    background-color: #e60073;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    header h1 {
-        font-size: 2em;
-    }
-
-    form {
-        padding: 20px 30px;
-    }
-
-    .fc-toolbar-title {
-        font-size: 1.2em;
-    }
-}
-/* Ajuste da altura dos blocos de tempo no FullCalendar */
-.fc-timegrid-slot {
-    min-height: 100px; /* Define a altura mínima dos slots */
-}
-
-.fc-timegrid-slot-lane {
-    height: 100px; /* Define a altura dos slots específicos */
-}
-/* css/style.css */
-
-/* Reset e estilos globais */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html, body {
-    height: 100%;
-    font-family: 'Poppins', sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
-}
-
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-/* Estilos do header */
-header {
-    background-image: url('assets/images/background.jpg'); /* Imagem de fundo opcional */
-    background-size: cover;
-    background-position: center;
-    padding: 60px 20px;
-    text-align: center;
-    color: #fff;
-}
-
-.header-content {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.profile-picture {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    border: 4px solid #fff;
-    object-fit: cover;
-    margin-bottom: 20px;
-}
-
-header h1 {
-    font-size: 3em;
-    margin-bottom: 10px;
-}
-
-header p {
-    font-size: 1.5em;
-    margin-bottom: 30px;
-}
-
-#schedule-button {
-    background-color: #ff66a3;
-    color: #fff;
-    border: none;
-    padding: 15px 30px;
-    font-size: 1.2em;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#schedule-button:hover {
-    background-color: #e60073;
-}
-
-/* Estilos do main */
-main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 40px 20px;
-    align-items: center;
-}
-
-.intro {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.intro h2 {
-    font-size: 2em;
-    color: #cc0066;
-    margin-bottom: 10px;
-}
-
-.intro p {
-    font-size: 1.2em;
-    color: #666;
-}
-
-.subjects {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-}
-
-.subject-card {
-    background-color: #fff;
-    border: 1px solid #ff80bf;
-    border-radius: 10px;
-    padding: 15px;
-    width: 150px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.subject-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-}
-
-.subject-card h3 {
-    font-size: 1.2em;
-    color: #cc0066;
-}
-
-/* Estilos do footer */
-footer {
-    background-color: #ffb3d9;
-    text-align: center;
-    padding: 15px;
-    color: #fff;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    header h1 {
-        font-size: 2.5em;
-    }
-
-    header p {
-        font-size: 1.2em;
-    }
-
-    .intro h2 {
-        font-size: 1.8em;
-    }
-
-    .subject-card {
-        width: 120px;
-        padding: 10px;
-    }
-
-    #schedule-button {
-        padding: 12px 25px;
-        font-size: 1em;
-    }
-}
 /* Ajustes para dispositivos móveis */
 @media (max-width: 768px) {
-    /* Ajustar a altura do calendário */
-    #calendar {
-        height: auto;
-        margin: 10px 0;
+    header h1 {
+        font-size: 1.5em;
     }
 
-    /* Ajustar a fonte e o tamanho dos elementos do calendário */
-    .fc-toolbar-title {
-        font-size: 1.2em;
-    }
-
-    .fc .fc-button {
-        padding: 5px 10px;
+    #logout-button {
+        padding: 8px 12px;
         font-size: 0.9em;
     }
 
-    /* Ajustar a altura dos slots de tempo */
-    .fc .fc-timegrid-slot {
-        min-height: 50px;
+    .fc-toolbar-title {
+        font-size: 1.2em;
     }
 
-    /* Melhorar a legibilidade dos eventos */
+    .fc-button {
+        padding: 8px 12px;
+        font-size: 0.9em;
+    }
+
     .fc-event {
         font-size: 0.8em;
-        padding: 2px 3px;
+        padding: 2px 4px;
     }
-}
-#agendar-button {
-    display: none; /* Inicialmente oculto */
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #ff66a3;
-    color: #fff;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 25px;
-    font-size: 1.2em;
-    cursor: pointer;
-    z-index: 1000;
-    transition: background-color 0.3s ease;
-}
 
-#agendar-button.show {
-    display: block; /* Torna visível ao adicionar a classe .show */
-}
-
-#agendar-button:hover {
-    background-color: #e60073;
-}
-/* Botão de salvar alterações */
-#confirm-changes-button {
-    display: none; /* Inicialmente oculto */
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #66cc66;
-    color: #fff;
-    border: none;
-    padding: 15px 30px;
-    font-size: 1.2em;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    z-index: 1000;
-}
-
-#confirm-changes-button:hover {
-    background-color: #55aa55;
-}
-
-/* Ajustes para dispositivos móveis */
-@media (max-width: 768px) {
-    #confirm-changes-button {
+    #popup-content {
         width: 90%;
-        padding: 12px 20px;
+        padding: 15px;
+    }
+
+    #popup-total {
         font-size: 1em;
     }
+
+    #whatsapp-button {
+        font-size: 0.9em;
+        padding: 8px 15px;
+    }
+}
+
+/* Estilos adicionais para botões e interações */
+button {
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
 }

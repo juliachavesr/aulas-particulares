@@ -1,5 +1,6 @@
 // js/calendar.js
 
+// Função para verificar se o dispositivo é móvel
 function isMobile() {
     return window.innerWidth <= 768;
 }
@@ -10,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Determina a visualização inicial com base no tamanho da tela
     var initialView = isMobile() ? 'timeGridDay' : 'timeGridWeek';
 
+    // Inicializa o calendário
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: initialView,
         locale: 'pt-br',
@@ -28,7 +30,8 @@ document.addEventListener('DOMContentLoaded', function() {
         selectable: true,
         selectOverlap: false,
         eventOverlap: false,
-        longPressDelay: 0, // Adicionado para permitir seleção imediata em dispositivos móveis
+        longPressDelay: 0, // Permite seleção imediata em dispositivos móveis
+        selectLongPressDelay: 0, // Garantia adicional para seleção imediata
         select: function(info) {
             // Calcula a duração em horas
             var start = moment(info.start);
@@ -63,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
         events: []
     });
 
+    // Renderiza o calendário
     calendar.render();
 
     // Carrega os eventos do Firebase e atualiza o calendário

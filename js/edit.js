@@ -1,5 +1,6 @@
 // js/edit.js
 
+// Verifica o estado de autenticação do usuário
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         console.log('Usuário autenticado:', user.email);
@@ -10,11 +11,13 @@ firebase.auth().onAuthStateChanged(function(user) {
     }
 });
 
+// Função para verificar se o dispositivo é móvel
 function isMobile() {
     return window.innerWidth <= 768;
 }
 
 function initializeCalendar() {
+    // Função para logout
     document.getElementById('logout-button').addEventListener('click', function() {
         firebase.auth().signOut().then(() => {
             window.location.href = 'login.html';
@@ -24,6 +27,7 @@ function initializeCalendar() {
     var calendarEl = document.getElementById('calendar');
     var initialView = isMobile() ? 'timeGridDay' : 'timeGridWeek';
 
+    // Inicializa o calendário
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: initialView,
         locale: 'pt-br',
@@ -43,7 +47,8 @@ function initializeCalendar() {
         selectable: true,
         eventOverlap: false,
         selectOverlap: false,
-        longPressDelay: 0, // Adicionado para permitir seleção imediata em dispositivos móveis
+        longPressDelay: 0, // Permite seleção imediata em dispositivos móveis
+        selectLongPressDelay: 0, // Garantia adicional para seleção imediata
         select: function(info) {
             var title = prompt('Digite o título para este horário:');
             if (title) {
@@ -69,6 +74,7 @@ function initializeCalendar() {
         events: []
     });
 
+    // Renderiza o calendário
     calendar.render();
 
     // Carrega os eventos do Firebase e atualiza o calendário
