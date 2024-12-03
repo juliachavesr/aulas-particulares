@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
             right: isMobile() ? 'timeGridDay,listWeek' : 'timeGridWeek,timeGridDay'
         },
         selectable: true,
+        longPressDelay: 0,
         selectOverlap: false,
         eventOverlap: false,
         select: function(info) {

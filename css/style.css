@@ -1,13 +1,15 @@
-/* css/style.css */
+/* ----------------------------------------------
+   1. Reset e Estilos Globais
+---------------------------------------------- */
 
-/* Reset e estilos globais */
+/* Reset básico para remover margens e paddings padrão */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Estilos globais */
+/* Fonte global e cores de fundo e texto */
 html, body {
     font-family: 'Poppins', sans-serif;
     background-color: #f9f9f9;
@@ -16,13 +18,14 @@ html, body {
     overflow-x: hidden;
 }
 
+/* Layout flexível para o corpo */
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
-/* Container principal */
+/* Container principal para centralizar o conteúdo */
 .container {
     width: 100%;
     max-width: 1200px;
@@ -30,9 +33,13 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
+    padding-bottom: 80px; /* Espaço para botões fixos */
 }
 
-/* Estilos do header */
+/* ----------------------------------------------
+   2. Estilos do Header
+---------------------------------------------- */
+
 header {
     background-color: #ffb3d9;
     text-align: center;
@@ -69,7 +76,8 @@ header p {
 }
 
 .contact-button {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     background-color: #ff66a3;
     color: #fff;
     padding: 10px 20px;
@@ -83,6 +91,13 @@ header p {
     background-color: #e60073;
 }
 
+.contact-button img {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+}
+
+/* Botões de Agendamento e Logout */
 #schedule-button,
 #logout-button {
     background-color: #fff;
@@ -101,13 +116,28 @@ header p {
     color: #fff;
 }
 
-/* Estilos do main */
+#logout-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #e60073;
+    color: #fff;
+}
+
+#logout-button:hover {
+    background-color: #cc0066;
+}
+
+/* ----------------------------------------------
+   3. Estilos do Main
+---------------------------------------------- */
+
 main {
     flex: 1;
     padding: 30px 20px;
 }
 
-/* Estilos das disciplinas */
+/* Estilos das Disciplinas */
 .subjects h2 {
     text-align: center;
     font-size: 1.5em;
@@ -131,7 +161,10 @@ main {
     font-size: 0.9em;
 }
 
-/* Estilos do footer */
+/* ----------------------------------------------
+   4. Estilos do Footer
+---------------------------------------------- */
+
 footer {
     background-color: #f2f2f2;
     text-align: center;
@@ -140,23 +173,35 @@ footer {
     color: #666;
 }
 
-/* Estilos para formulários (login.html) */
-.login-form {
+/* ----------------------------------------------
+   5. Estilos da Página de Login
+---------------------------------------------- */
+
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+}
+
+#login-form {
+    width: 90%;
     max-width: 400px;
-    margin: 50px auto;
     background-color: #fff;
-    padding: 30px 40px;
-    border-radius: 10px;
+    padding: 30px 20px;
+    border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-.login-form h2 {
+#login-form h2 {
     text-align: center;
     margin-bottom: 20px;
     color: #cc0066;
+    font-size: 1.8em;
 }
 
-.login-form input {
+#login-form input {
     width: 100%;
     padding: 12px 15px;
     margin: 10px 0;
@@ -167,11 +212,11 @@ footer {
     color: #333;
 }
 
-.login-form input:focus {
-    border: 2px solid #ff66a3;
+#login-form input:focus {
+    border-color: #ff66a3;
 }
 
-.login-form button {
+#login-form button {
     width: 100%;
     margin-top: 20px;
     background-color: #ff66a3;
@@ -184,29 +229,32 @@ footer {
     transition: background-color 0.3s ease;
 }
 
-.login-form button:hover {
+#login-form button:hover {
     background-color: #e60073;
 }
 
-/* Estilos para o calendário (schedule.html e edit.html) */
+/* ----------------------------------------------
+   6. Estilos do Calendário (schedule.html e edit.html)
+---------------------------------------------- */
+
 .calendar-container {
     flex: 1;
-    padding: 20px;
+    padding: 20px 10px;
 }
 
 #calendar {
-    max-width: 100%;
+    width: 100%;
     margin: 0 auto;
 }
 
-/* FullCalendar customizado */
+/* FullCalendar Customizado */
 .fc {
     font-family: 'Poppins', sans-serif;
 }
 
 .fc-toolbar {
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     margin-bottom: 20px;
 }
 
@@ -216,34 +264,34 @@ footer {
 }
 
 .fc-button {
-    background-color: #ff66a3;
-    border: none;
-    color: #fff;
-    padding: 8px 12px;
-    border-radius: 25px;
-    font-size: 0.9em;
-    margin: 5px;
+    background-color: #ff66a3 !important;
+    border: none !important;
+    color: #fff !important;
+    border-radius: 25px !important;
+    padding: 8px 12px !important;
+    font-size: 0.9em !important;
+    margin: 5px !important;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .fc-button:hover {
-    background-color: #e60073;
+    background-color: #e60073 !important;
 }
 
 .fc-button-primary:not(:disabled).fc-button-active,
 .fc-button-primary:not(:disabled):active {
-    background-color: #e60073;
-    box-shadow: none;
+    background-color: #e60073 !important;
+    box-shadow: none !important;
 }
 
 .fc-event {
-    background-color: #ffb3d9;
-    border: none;
-    color: #4a4a4a;
-    font-size: 0.8em;
-    border-radius: 5px;
-    padding: 2px 4px;
+    background-color: #ffb3d9 !important;
+    border: none !important;
+    color: #4a4a4a !important;
+    font-size: 0.8em !important;
+    border-radius: 5px !important;
+    padding: 2px 4px !important;
 }
 
 .fc .fc-daygrid-day-number,
@@ -273,9 +321,13 @@ footer {
     opacity: 0.3;
 }
 
-/* Botões de solicitação e registro */
+/* Botões de Solicitação e Registro */
 #request-appointment-button,
 #register-availability-button {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: #ff66a3;
     color: #fff;
     border: none;
@@ -283,8 +335,15 @@ footer {
     font-size: 1em;
     border-radius: 25px;
     cursor: pointer;
-    margin-top: 20px;
     transition: background-color 0.3s ease;
+    z-index: 1000;
+    width: calc(100% - 40px);
+    max-width: 400px;
+}
+
+#request-appointment-button.hidden,
+#register-availability-button.hidden {
+    display: none;
 }
 
 #request-appointment-button:hover,
@@ -292,11 +351,11 @@ footer {
     background-color: #e60073;
 }
 
-.hidden {
-    display: none;
-}
+/* ----------------------------------------------
+   7. Estilos dos Popups
+---------------------------------------------- */
 
-/* Estilos para os popups */
+/* Estilos Gerais dos Popups */
 .popup {
     display: none;
     position: fixed;
@@ -342,6 +401,9 @@ footer {
 
 .popup-actions button,
 .popup-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background-color: #ff66a3;
     color: #fff;
     border: none;
@@ -358,32 +420,72 @@ footer {
     background-color: #e60073;
 }
 
-#total-value {
-    font-size: 1.2em;
-    color: #cc0066;
+.popup-actions a img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
 }
 
-/* Estilos para o botão de logout (edit.html) */
-#logout-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: #e60073;
+/* Popup de Edição */
+#edit-popup .popup-content {
+    padding: 20px 30px;
+    border-radius: 15px;
+}
+
+#edit-popup .popup-actions {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.delete-button {
+    background-color: #ff4d4d;
     color: #fff;
     border: none;
     padding: 10px 20px;
-    font-size: 1em;
     border-radius: 25px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-#logout-button:hover {
-    background-color: #cc0066;
+.delete-button:hover {
+    background-color: #ff1a1a;
 }
 
-/* Responsividade */
+/* Popup de Registro */
+#register-popup .popup-actions button {
+    background-color: #ff66a3;
+}
+
+#register-popup .popup-actions button:hover {
+    background-color: #e60073;
+}
+
+/* Popup de Agendamento */
+#appointment-popup .popup-actions a {
+    background-color: #ff66a3; /* Alinhado com a paleta da aplicação */
+}
+
+#appointment-popup .popup-actions a:hover {
+    background-color: #e60073;
+}
+
+#appointment-popup .popup-actions a img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+#total-value {
+    font-size: 1.2em;
+    color: #cc0066;
+}
+
+/* ----------------------------------------------
+   8. Responsividade
+---------------------------------------------- */
+
 @media (max-width: 768px) {
+    /* Ajustes do Header */
     .profile-picture {
         width: 120px;
         height: 120px;
@@ -410,6 +512,7 @@ footer {
         font-size: 0.9em;
     }
 
+    /* Ajustes das Disciplinas */
     .subjects h2 {
         font-size: 1.3em;
     }
@@ -419,244 +522,83 @@ footer {
         font-size: 0.8em;
     }
 
-    .login-form {
-        margin: 30px auto;
-        padding: 20px 25px;
+    /* Ajustes da Página de Login */
+    #login-form {
+        padding: 20px 15px;
     }
 
-    .login-form input {
+    #login-form h2 {
+        font-size: 1.5em;
+    }
+
+    #login-form input {
         padding: 10px 12px;
         font-size: 0.9em;
     }
 
-    .login-form button {
+    #login-form button {
         padding: 10px 20px;
         font-size: 0.9em;
     }
 
+    /* Ajustes do Calendário */
     .fc-toolbar-title {
         font-size: 1em;
     }
 
     .fc-button {
-        padding: 6px 10px;
-        font-size: 0.8em;
+        padding: 6px 10px !important;
+        font-size: 0.8em !important;
     }
 
     .fc-event {
-        font-size: 0.7em;
-        padding: 2px 3px;
+        font-size: 0.7em !important;
+        padding: 2px 3px !important;
     }
 
     .fc-timegrid-slot {
         min-height: 60px;
     }
 
-    #popup-content {
-        padding: 15px;
+    /* Ajustes dos Popups em Mobile */
+    .popup-content {
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        border-radius: 0;
+        padding: 20px;
+        overflow-y: auto;
     }
 
-    #popup-total {
-        font-size: 1em;
+    .close-button {
+        top: 15px;
+        right: 15px;
     }
 
-    #whatsapp-button,
+    .popup-actions {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    /* Botões nos Popups */
     #contact-button {
-        font-size: 0.9em;
         padding: 8px 15px;
+        font-size: 0.9em;
     }
 
+    /* Botões de Solicitação e Registro */
     #request-appointment-button,
     #register-availability-button {
-        width: 90%;
+        width: calc(100% - 40px);
         padding: 10px 20px;
         font-size: 0.9em;
     }
 
-    /* Estilos para os popups específicos */
-    #appointment-popup .popup-actions a {
-        background-color: #25D366;
+    /* Botão de Logout em Mobile */
+    #logout-button {
+        top: 15px;
+        right: 15px;
+        padding: 10px 15px;
+        font-size: 0.9em;
     }
-
-    #appointment-popup .popup-actions a:hover {
-        background-color: #128C7E;
-    }
-
-    #register-popup .popup-actions button {
-        background-color: #ff66a3;
-    }
-
-    #register-popup .popup-actions button:hover {
-        background-color: #e60073;
-    }
-}
-/* Estilos para o popup */
-#popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-
-#popup.show {
-    display: flex;
-}
-
-#popup-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 15px;
-    text-align: center;
-    position: relative;
-    width: 90%;
-    max-width: 400px;
-}
-
-#popup-content form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-#popup-content label {
-    font-size: 1em;
-    color: #333;
-    text-align: left;
-}
-
-#popup-content input[type="text"],
-#popup-content textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ff80bf;
-    border-radius: 5px;
-    font-size: 1em;
-    outline: none;
-}
-
-#popup-content input[type="text"]:focus,
-#popup-content textarea:focus {
-    border-color: #ff66a3;
-}
-
-#popup-total {
-    font-size: 1.2em;
-    color: #cc0066;
-    margin-top: 10px;
-}
-
-#whatsapp-button {
-    display: inline-flex;
-    align-items: center;
-    background-color: #25D366;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 25px;
-    text-decoration: none;
-    font-size: 1em;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
-}
-
-#whatsapp-button:hover {
-    background-color: #128C7E;
-}
-
-#whatsapp-button img {
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
-}
-
-#close-button {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 1.5em;
-    cursor: pointer;
-}
-
-/* Botão "Confirmar Agendamento" */
-#confirm-schedule-button {
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #ff66a3;
-    color: #fff;
-    border: none;
-    padding: 12px 25px;
-    font-size: 1em;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    z-index: 1000;
-}
-
-#confirm-schedule-button.show {
-    display: block;
-}
-
-#confirm-schedule-button:hover {
-    background-color: #e60073;
-}
-/* Estilos para o popup de edição */
-.popup {
-    display: none; /* Oculto por padrão */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.popup.show {
-    display: flex;
-}
-
-.popup-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    width: 90%;
-    max-width: 400px;
-    position: relative;
-}
-
-.close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.popup-actions {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.delete-button {
-    background-color: #ff4d4d;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.delete-button:hover {
-    background-color: #ff1a1a;
 }

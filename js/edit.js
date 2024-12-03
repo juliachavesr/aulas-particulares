@@ -57,6 +57,7 @@ function initializeCalendar() {
         },
         editable: true,
         selectable: true,
+        longPressDelay: 0,
         selectOverlap: false,
         eventOverlap: false,
         select: function(info) {
