@@ -1,70 +1,51 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <title>Professora Júlia Chaves - Aulas Particulares</title>
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Meta tag para responsividade -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Fonte Poppins do Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Importação da fonte Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Link para o arquivo CSS -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <div class="header-content">
+    <div class="container">
+        <header>
             <img src="assets/images/foto-julia.png" alt="Foto da Professora Júlia Chaves" class="profile-picture">
-            <h1>Júlia Chaves</h1>
-            <p>Aulas Particulares</p>
+            <h1>Profª Júlia Chaves</h1>
+            <p>Aulas Particulares e Reforço Escolar</p>
+            <a href="tel:+5581999298108" class="contact-button">📞 (81) 99929-8108</a>
+            <a href="mailto:julia.chaves@example.com" class="contact-button">✉️ Enviar E-mail</a>
             <button id="schedule-button" onclick="window.location.href='schedule.html'">Agende uma Aula</button>
-        </div>
-    </header>
+        </header>
 
-    <main>
-        <section class="intro">
-            <h2>Disciplinas Ofertadas</h2>
-            <p>Presencial: R$ 50/hora | Online: R$ 40/hora</p>
-        </section>
+        <main>
+            <section class="subjects">
+                <h2>Disciplinas Oferecidas</h2>
+                <ul>
+                    <li>Matemática</li>
+                    <li>Português</li>
+                    <li>Química</li>
+                    <li>Física</li>
+                    <li>Biologia</li>
+                    <li>Geografia</li>
+                    <li>História</li>
+                    <li>Inglês</li>
+                    <li>Redação</li>
+                    <li>Filosofia</li>
+                    <li>Sociologia</li>
+                </ul>
+            </section>
+        </main>
 
-        <section class="subjects">
-            <div class="subject-card">
-                <h3>Matemática</h3>
-            </div>
-            <div class="subject-card">
-                <h3>Português</h3>
-            </div>
-            <div class="subject-card">
-                <h3>Química</h3>
-            </div>
-            <div class="subject-card">
-                <h3>Física</h3>
-            </div>
-            <div class="subject-card">
-                <h3>Biologia</h3>
-            </div>
-            <div class="subject-card">
-                <h3>Geografia</h3>
-            </div>
-            <div class="subject-card">
-                <h3>História</h3>
-            </div>
-            <div class="subject-card">
-                <h3>Inglês</h3>
-            </div>
-            <div class="subject-card">
-                <h3>Redação</h3>
-            </div>
-            <div class="subject-card">
-                <h3>Filosofia</h3>
-            </div>
-            <div class="subject-card">
-                <h3>Sociologia</h3>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2024 Professora Júlia Chaves. Todos os direitos reservados.</p>
-    </footer>
+        <footer>
+            <p>&copy; 2024 Professora Júlia Chaves. Todos os direitos reservados.</p>
+        </footer>
+    </div>
 </body>
 </html>

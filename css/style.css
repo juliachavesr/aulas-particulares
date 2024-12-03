@@ -1,16 +1,17 @@
-/* Reset e estilos globais */
+/* css/style.css */
+
+/* Estilos globais */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Estilos globais */
 html, body {
-    height: 100%;
     font-family: 'Poppins', sans-serif;
     background-color: #f9f9f9;
     color: #333;
+    height: 100%;
 }
 
 body {
@@ -19,57 +20,24 @@ body {
     min-height: 100vh;
 }
 
-/* Estilos do header */
-header {
-    background-color: #ffb3d9;
-    padding: 15px;
-    text-align: center;
-    position: relative;
-}
-
-header h1 {
-    font-size: 2em;
-    color: #fff;
-}
-
-/* Estilos do botão de logout (apenas para páginas que o utilizam) */
-#logout-button {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background-color: #e60073;
-    color: #fff;
-    border: none;
-    padding: 10px 15px;
-    font-size: 0.9em;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#logout-button:hover {
-    background-color: #cc0066;
-}
-
-/* Estilos do main */
-main {
+/* Container principal */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 10px;
 }
 
-/* Estilos específicos para a página index */
-.index-header {
-    background-image: url('assets/images/background.jpg'); /* Imagem de fundo opcional */
-    background-size: cover;
-    background-position: center;
-    padding: 60px 20px;
+/* Estilos do header */
+header {
+    background-color: #ffb3d9;
     text-align: center;
-    color: #fff;
+    padding: 40px 20px;
 }
 
-.index-header .profile-picture {
+.profile-picture {
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -78,42 +46,105 @@ main {
     margin-bottom: 20px;
 }
 
-.index-header h1 {
-    font-size: 2.5em;
+header h1 {
+    font-size: 2em;
+    color: #fff;
     margin-bottom: 10px;
 }
 
-.index-header p {
+header p {
     font-size: 1.2em;
-    margin-bottom: 30px;
+    color: #fff;
+    margin-bottom: 20px;
 }
 
-#index-schedule-button {
+.contact-button {
+    display: inline-block;
     background-color: #ff66a3;
     color: #fff;
-    border: none;
+    padding: 10px 20px;
+    margin: 5px 5px 15px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+.contact-button:hover {
+    background-color: #e60073;
+}
+
+#schedule-button {
+    background-color: #fff;
+    color: #ff66a3;
+    border: 2px solid #ff66a3;
     padding: 12px 25px;
     font-size: 1em;
     border-radius: 25px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-#index-schedule-button:hover {
-    background-color: #e60073;
+#schedule-button:hover {
+    background-color: #ff66a3;
+    color: #fff;
 }
 
-/* Estilos específicos para a página login */
-.login-form {
+/* Estilos do main */
+main {
+    flex: 1;
+    padding: 30px 20px;
+}
+
+.subjects h2 {
+    text-align: center;
+    font-size: 1.5em;
+    color: #cc0066;
+    margin-bottom: 20px;
+}
+
+.subjects ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.subjects li {
+    background-color: #ffb3d9;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 0.9em;
+}
+
+/* Estilos do footer */
+footer {
+    background-color: #f2f2f2;
+    text-align: center;
+    padding: 15px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* Estilos para formulários (login.html) */
+form {
     max-width: 400px;
     margin: 50px auto;
     background-color: #fff;
     padding: 30px 40px;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-.login-form input {
+form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #cc0066;
+}
+
+form input {
     width: 100%;
     padding: 12px 15px;
     margin: 10px 0;
@@ -124,11 +155,11 @@ main {
     color: #333;
 }
 
-.login-form input:focus {
+form input:focus {
     border: 2px solid #ff66a3;
 }
 
-.login-form button {
+form button {
     width: 100%;
     margin-top: 20px;
     background-color: #ff66a3;
@@ -141,18 +172,19 @@ main {
     transition: background-color 0.3s ease;
 }
 
-.login-form button:hover {
+form button:hover {
     background-color: #e60073;
 }
 
-/* Estilos do calendário */
-#calendar {
+/* Estilos para o calendário (schedule.html e edit.html) */
+.calendar-container {
     flex: 1;
-    width: 100%;
+    padding: 20px;
+}
+
+#calendar {
     max-width: 100%;
     margin: 0 auto;
-    /* Ajuste para ocupar a tela sem rolagem */
-    height: calc(100vh - 120px); /* Altura total menos o header e possíveis margens */
 }
 
 .fc {
@@ -162,6 +194,7 @@ main {
 .fc-toolbar {
     flex-wrap: wrap;
     justify-content: center;
+    margin-bottom: 20px;
 }
 
 .fc-toolbar-title {
@@ -206,13 +239,54 @@ main {
     font-size: 0.9em;
 }
 
-/* Ajuste da altura dos slots de tempo no FullCalendar */
-.fc-timegrid-slot {
-    min-height: 80px; /* Ajuste para aumentar a altura dos slots */
+.fc-theme-standard .fc-scrollgrid {
+    border-color: #ff80bf;
 }
 
-.fc-timegrid-slot-lane {
-    height: 80px;
+.fc-col-header-cell {
+    background-color: #ffe6f2;
+}
+
+.fc .fc-col-header-cell-cushion {
+    color: #cc0066;
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+    background-color: #ffe6f2;
+}
+
+.fc-highlight {
+    background-color: #ffb3d9;
+    opacity: 0.3;
+}
+
+/* Estilos para o botão "Agendar" */
+#confirm-schedule-button,
+#confirm-changes-button {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ff66a3;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1em;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    z-index: 1000;
+}
+
+#confirm-schedule-button:hover,
+#confirm-changes-button:hover {
+    background-color: #e60073;
+}
+
+#confirm-schedule-button.show,
+#confirm-changes-button.show {
+    display: block;
 }
 
 /* Estilos para o popup */
@@ -279,67 +353,93 @@ main {
     margin-right: 10px;
 }
 
-/* Estilos para o botão "Agendar" */
-#confirm-schedule-button {
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #ff66a3;
-    color: #fff;
-    border: none;
-    padding: 12px 25px;
-    font-size: 1em;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    z-index: 1000;
-}
-
-#confirm-schedule-button.show {
-    display: block;
-}
-
-#confirm-schedule-button:hover {
+/* Estilos para o botão de logout (edit.html) */
+#logout-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
     background-color: #e60073;
-}
-
-/* Estilos para o botão "Salvar Alterações" no edit.html */
-#confirm-changes-button {
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #66cc66;
-    color: #fff;
-    border: none;
-    padding: 12px 25px;
+    padding: 10px 20px;
     font-size: 1em;
+    border: none;
     border-radius: 25px;
+    color: #fff;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    z-index: 1000;
 }
 
-#confirm-changes-button.show {
-    display: block;
+#logout-button:hover {
+    background-color: #cc0066;
 }
 
-#confirm-changes-button:hover {
-    background-color: #55aa55;
+/* Estilos dos botões gerais */
+button {
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* Estilos dos links */
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #cc0066;
 }
 
 /* Responsividade */
 @media (max-width: 768px) {
-    header h1 {
-        font-size: 1.5em;
+    .profile-picture {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 15px;
     }
 
-    #logout-button {
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    header p {
+        font-size: 1em;
+        margin-bottom: 15px;
+    }
+
+    .contact-button {
+        padding: 8px 15px;
+        font-size: 0.8em;
+    }
+
+    #schedule-button {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+
+    .subjects h2 {
+        font-size: 1.3em;
+    }
+
+    .subjects li {
         padding: 8px 12px;
         font-size: 0.8em;
+    }
+
+    form {
+        margin: 30px auto;
+        padding: 20px 25px;
+    }
+
+    form input {
+        padding: 10px 12px;
+        font-size: 0.9em;
+    }
+
+    form button {
+        padding: 10px 20px;
+        font-size: 0.9em;
     }
 
     .fc-toolbar-title {
@@ -379,62 +479,4 @@ main {
         padding: 10px 20px;
         font-size: 0.9em;
     }
-
-    /* Ajustes específicos para a página index em dispositivos móveis */
-    .index-header {
-        padding: 40px 20px;
-    }
-
-    .index-header h1 {
-        font-size: 2em;
-    }
-
-    .index-header p {
-        font-size: 1em;
-    }
-
-    .index-header .profile-picture {
-        width: 120px;
-        height: 120px;
-    }
-
-    #index-schedule-button {
-        padding: 10px 20px;
-        font-size: 0.9em;
-    }
-
-    /* Ajustes para o formulário de login em dispositivos móveis */
-    .login-form {
-        margin: 30px auto;
-        padding: 20px 25px;
-    }
-
-    .login-form input {
-        padding: 10px 12px;
-        font-size: 0.9em;
-    }
-
-    .login-form button {
-        padding: 10px 20px;
-        font-size: 0.9em;
-    }
-}
-
-/* Estilos dos botões gerais */
-button {
-    cursor: pointer;
-}
-
-button:hover {
-    opacity: 0.9;
-}
-
-/* Estilos dos links */
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-a:hover {
-    color: #cc0066;
 }
