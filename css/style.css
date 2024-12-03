@@ -359,18 +359,25 @@ footer {
 .popup {
     display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    justify-content: center;
-    align-items: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 400px;
+    max-height: 80%; /* Limita a altura do popup */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
     z-index: 1000;
+    overflow-y: auto; /* Permite rolagem interna */
 }
 
 .popup.show {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .popup-content {
@@ -389,7 +396,11 @@ footer {
     right: 15px;
     font-size: 1.5em;
     cursor: pointer;
+    background: none;
+    border: none;
+    color: #ff66a3;
 }
+
 
 .popup-actions {
     display: flex;
@@ -545,7 +556,12 @@ footer {
     .fc-toolbar-title {
         font-size: 1em;
     }
-
+    .popup {
+        width: 95%;
+        max-width: 350px;
+        max-height: 70%; /* Reduz ainda mais a altura no mobile */
+        padding: 15px;
+    }
     .fc-button {
         padding: 6px 10px !important;
         font-size: 0.8em !important;
@@ -601,4 +617,14 @@ footer {
         padding: 10px 15px;
         font-size: 0.9em;
     }
+}
+
+/* Estilização para horários selecionados */
+.fc-event.selected-slot {
+    background-color: #d81b60 !important; /* Rosa mais escuro */
+    border: none !important;
+    color: #fff !important; /* Texto branco para contraste */
+    font-size: 0.9em;
+    border-radius: 5px;
+    padding: 2px 4px;
 }

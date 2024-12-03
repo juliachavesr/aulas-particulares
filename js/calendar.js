@@ -64,7 +64,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 start: info.start,
                 end: info.end,
                 allDay: false,
-                color: '#ff4081', // Cor mais forte
+                color: '#d81b60', // Cor mais forte
+                classNames: ['selected-slot'],
                 overlap: false
             });
 
