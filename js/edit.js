@@ -43,6 +43,7 @@ function initializeCalendar() {
         selectable: true,
         eventOverlap: false,
         selectOverlap: false,
+        longPressDelay: 0, // Adicionado para permitir seleção imediata em dispositivos móveis
         select: function(info) {
             var title = prompt('Digite o título para este horário:');
             if (title) {
