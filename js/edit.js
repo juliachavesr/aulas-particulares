@@ -10,6 +10,10 @@ firebase.auth().onAuthStateChanged(function(user) {
     }
 });
 
+function isMobile() {
+    return window.innerWidth <= 768;
+}
+
 function initializeCalendar() {
     document.getElementById('logout-button').addEventListener('click', function() {
         firebase.auth().signOut().then(() => {
@@ -18,20 +22,22 @@ function initializeCalendar() {
     });
 
     var calendarEl = document.getElementById('calendar');
+    var initialView = isMobile() ? 'timeGridDay' : 'timeGridWeek';
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'timeGridWeek',
+        initialView: initialView,
         locale: 'pt-br',
         timeZone: 'local',
+        height: 'auto',
         allDaySlot: false,
-        slotDuration: '01:00:00',
+        slotDuration: '00:30:00',
         slotLabelInterval: '01:00',
         slotMinTime: '08:00:00',
         slotMaxTime: '21:00:00',
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
-            right: 'timeGridWeek,timeGridDay'
+            right: isMobile() ? 'timeGridDay,listWeek' : 'timeGridWeek,timeGridDay'
         },
         editable: true,
         selectable: true,
@@ -44,8 +50,8 @@ function initializeCalendar() {
                 var newEventRef = firebase.database().ref('events').push();
                 newEventRef.set({
                     title: title,
-                    start: info.startStr,
-                    end: info.endStr,
+                    start: info.start.toISOString(),
+                    end: info.end.toISOString(),
                     allDay: false
                 });
             }

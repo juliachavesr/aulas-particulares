@@ -341,16 +341,17 @@ body {
 
 /* Estilos do header */
 header {
-    background-color: #ffb3d9;
-    padding: 40px 20px;
+    background-image: url('assets/images/background.jpg'); /* Imagem de fundo opcional */
+    background-size: cover;
+    background-position: center;
+    padding: 60px 20px;
     text-align: center;
-    position: relative;
+    color: #fff;
 }
 
 .header-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .profile-picture {
@@ -363,74 +364,13 @@ header {
 }
 
 header h1 {
-    font-size: 2.5em;
-    color: #fff;
-}
-
-/* Estilos do main */
-main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 40px 20px;
-}
-
-.intro {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.intro h2 {
-    font-size: 2em;
-    color: #cc0066;
+    font-size: 3em;
     margin-bottom: 10px;
 }
 
-.intro p {
-    font-size: 1.2em;
-    color: #666;
-}
-
-/* Estilos das disciplinas */
-.subjects {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-}
-
-.subject-card {
-    background-color: #fff;
-    border: 1px solid #ff80bf;
-    border-radius: 10px;
-    padding: 20px;
-    width: 250px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.subject-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-}
-
-.subject-card h3 {
+header p {
     font-size: 1.5em;
-    color: #cc0066;
-    margin-bottom: 15px;
-}
-
-.subject-card p {
-    font-size: 1.1em;
-    color: #555;
-    margin-bottom: 10px;
-}
-
-/* Estilos do botão de agendamento */
-.contact {
-    text-align: center;
-    margin-top: 50px;
+    margin-bottom: 30px;
 }
 
 #schedule-button {
@@ -448,6 +388,59 @@ main {
     background-color: #e60073;
 }
 
+/* Estilos do main */
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 20px;
+    align-items: center;
+}
+
+.intro {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.intro h2 {
+    font-size: 2em;
+    color: #cc0066;
+    margin-bottom: 10px;
+}
+
+.intro p {
+    font-size: 1.2em;
+    color: #666;
+}
+
+.subjects {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.subject-card {
+    background-color: #fff;
+    border: 1px solid #ff80bf;
+    border-radius: 10px;
+    padding: 15px;
+    width: 150px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.subject-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.subject-card h3 {
+    font-size: 1.2em;
+    color: #cc0066;
+}
+
 /* Estilos do footer */
 footer {
     background-color: #ffb3d9;
@@ -459,7 +452,11 @@ footer {
 /* Responsividade */
 @media (max-width: 768px) {
     header h1 {
-        font-size: 2em;
+        font-size: 2.5em;
+    }
+
+    header p {
+        font-size: 1.2em;
     }
 
     .intro h2 {
@@ -467,10 +464,94 @@ footer {
     }
 
     .subject-card {
-        width: 100%;
+        width: 120px;
+        padding: 10px;
     }
 
     #schedule-button {
-        width: 100%;
+        padding: 12px 25px;
+        font-size: 1em;
+    }
+}
+/* Ajustes para dispositivos móveis */
+@media (max-width: 768px) {
+    /* Ajustar a altura do calendário */
+    #calendar {
+        height: auto;
+        margin: 10px 0;
+    }
+
+    /* Ajustar a fonte e o tamanho dos elementos do calendário */
+    .fc-toolbar-title {
+        font-size: 1.2em;
+    }
+
+    .fc .fc-button {
+        padding: 5px 10px;
+        font-size: 0.9em;
+    }
+
+    /* Ajustar a altura dos slots de tempo */
+    .fc .fc-timegrid-slot {
+        min-height: 50px;
+    }
+
+    /* Melhorar a legibilidade dos eventos */
+    .fc-event {
+        font-size: 0.8em;
+        padding: 2px 3px;
+    }
+}
+#agendar-button {
+    display: none; /* Inicialmente oculto */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #ff66a3;
+    color: #fff;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.2em;
+    cursor: pointer;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
+
+#agendar-button.show {
+    display: block; /* Torna visível ao adicionar a classe .show */
+}
+
+#agendar-button:hover {
+    background-color: #e60073;
+}
+/* Botão de salvar alterações */
+#confirm-changes-button {
+    display: none; /* Inicialmente oculto */
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #66cc66;
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    z-index: 1000;
+}
+
+#confirm-changes-button:hover {
+    background-color: #55aa55;
+}
+
+/* Ajustes para dispositivos móveis */
+@media (max-width: 768px) {
+    #confirm-changes-button {
+        width: 90%;
+        padding: 12px 20px;
+        font-size: 1em;
     }
 }
