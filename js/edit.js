@@ -1,5 +1,9 @@
 // js/edit.js
 
+// Configuração do Firebase
+// Certifique-se de substituir as configurações abaixo pelas suas próprias configurações do Firebase
+
+
 // Verifica o estado de autenticação do usuário
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
@@ -29,8 +33,11 @@ function initializeCalendar() {
     var registerPopup = document.getElementById('register-popup');
     var eventTitleInput = document.getElementById('event-title');
 
-    // Array para armazenar as seleções
+    // Array para armazenar as seleções temporárias
     var selectedSlots = [];
+
+    // Variável para armazenar o evento atual sendo editado
+    var currentEvent = null;
 
     // Inicializa o calendário
     var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -74,7 +81,7 @@ function initializeCalendar() {
                 end: info.end,
                 allDay: false,
                 display: 'background',
-                backgroundColor: '#ffb3d9',
+                backgroundColor: '#ff4081',
                 overlap: false
             });
 
@@ -85,18 +92,23 @@ function initializeCalendar() {
         },
         eventClick: function(info) {
             if (info.event.title === 'Selecionado') {
-                // Remove da lista de seleções
+                // Remove da lista de seleções temporárias
                 selectedSlots = selectedSlots.filter(function(slot) {
                     return !(slot.start.getTime() === info.event.start.getTime() && slot.end.getTime() === info.event.end.getTime());
                 });
 
-                // Remove o evento do calendário
+                // Remove o evento de fundo do calendário
                 info.event.remove();
 
                 // Oculta o botão se não houver mais seleções
                 if (selectedSlots.length === 0) {
                     registerButton.classList.add('hidden');
                 }
+            } else {
+                // Evento existente, abrir popup de edição
+                currentEvent = info.event; // Armazena o evento atual
+                document.getElementById('edit-event-title').value = info.event.title; // Preenche o input com o título atual
+                openEditPopup(); // Abre o popup de edição
             }
         },
         events: []
@@ -202,5 +214,63 @@ function initializeCalendar() {
         closeRegisterPopup();
 
         alert('Disponibilidade registrada com sucesso!');
+    };
+
+    // Função para abrir o popup de edição
+    window.openEditPopup = function() {
+        var editPopup = document.getElementById('edit-popup');
+        editPopup.classList.add('show');
+    };
+
+    // Função para fechar o popup de edição
+    window.closeEditPopup = function() {
+        var editPopup = document.getElementById('edit-popup');
+        editPopup.classList.remove('show');
+        currentEvent = null; // Limpa o evento atual
+    };
+
+    // Função para salvar as alterações do evento
+    window.saveEvent = function() {
+        var newTitle = document.getElementById('edit-event-title').value.trim();
+
+        if (newTitle === '') {
+            alert('Por favor, insira o nome do evento.');
+            return;
+        }
+
+        if (currentEvent) {
+            // Atualiza o título no Firebase
+            var eventId = currentEvent.id;
+            firebase.database().ref('events/' + eventId).update({
+                title: newTitle
+            }).then(function() {
+                // Atualiza o título no calendário
+                currentEvent.setProp('title', newTitle);
+                alert('Evento atualizado com sucesso!');
+                closeEditPopup();
+            }).catch(function(error) {
+                console.error('Erro ao atualizar o evento:', error);
+                alert('Ocorreu um erro ao atualizar o evento.');
+            });
+        }
+    };
+
+    // Função para remover o evento
+    window.deleteEvent = function() {
+        if (currentEvent) {
+            if (confirm('Tem certeza de que deseja remover este evento?')) {
+                var eventId = currentEvent.id;
+                firebase.database().ref('events/' + eventId).remove()
+                    .then(function() {
+                        currentEvent.remove(); // Remove do calendário
+                        alert('Evento removido com sucesso!');
+                        closeEditPopup();
+                    })
+                    .catch(function(error) {
+                        console.error('Erro ao remover o evento:', error);
+                        alert('Ocorreu um erro ao remover o evento.');
+                    });
+            }
+        }
     };
 }

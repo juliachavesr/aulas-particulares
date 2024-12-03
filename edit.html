@@ -39,6 +39,19 @@
             </div>
         </div>
     </div>
+    <!-- Popup para editar ou remover o evento -->
+    <div id="edit-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-button" onclick="closeEditPopup()">&times;</span>
+            <h2>Editar Evento</h2>
+            <input type="text" id="edit-event-title" placeholder="Nome do Evento" />
+            <div class="popup-actions">
+                <button onclick="saveEvent()">Salvar</button>
+                <button onclick="deleteEvent()" class="delete-button">Remover</button>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Scripts -->
     <!-- Firebase -->

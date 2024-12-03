@@ -50,14 +50,18 @@ document.addEventListener('DOMContentLoaded', function() {
             // Adiciona o slot à lista de seleções
             selectedSlots.push({ start: info.start, end: info.end });
 
-            // Adiciona um evento de fundo para destacar a seleção
+            // Ordena os slots selecionados
+            selectedSlots.sort(function(a, b) {
+                return a.start - b.start;
+            });
+
+            // Adiciona um evento para destacar a seleção com cor mais forte
             calendar.addEvent({
                 title: 'Selecionado',
                 start: info.start,
                 end: info.end,
                 allDay: false,
-                display: 'background',
-                backgroundColor: '#ffb3d9',
+                color: '#ff4081', // Cor mais forte
                 overlap: false
             });
 
@@ -65,6 +69,11 @@ document.addEventListener('DOMContentLoaded', function() {
             requestButton.classList.remove('hidden');
 
             calendar.unselect();
+
+            // Mantém o botão sempre visível em dispositivos móveis
+            if (isMobile()) {
+                requestButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         },
         eventClick: function(info) {
             if (info.event.title === 'Selecionado') {
@@ -125,7 +134,36 @@ document.addEventListener('DOMContentLoaded', function() {
         var summaryText = '';
         var total = 0;
 
-        selectedSlots.forEach(function(slot) {
+        // Ordena os slots selecionados
+        selectedSlots.sort(function(a, b) {
+            return a.start - b.start;
+        });
+
+        // Agrupa slots consecutivos
+        var groupedSlots = [];
+        var groupStart = selectedSlots[0].start;
+        var groupEnd = selectedSlots[0].end;
+
+        for (var i = 1; i < selectedSlots.length; i++) {
+            var currentSlot = selectedSlots[i];
+            var previousSlot = selectedSlots[i - 1];
+
+            // Verifica se o slot atual é consecutivo ao anterior
+            if (currentSlot.start.getTime() === previousSlot.end.getTime()) {
+                groupEnd = currentSlot.end;
+            } else {
+                // Adiciona o grupo anterior à lista
+                groupedSlots.push({ start: groupStart, end: groupEnd });
+                // Inicia um novo grupo
+                groupStart = currentSlot.start;
+                groupEnd = currentSlot.end;
+            }
+        }
+        // Adiciona o último grupo à lista
+        groupedSlots.push({ start: groupStart, end: groupEnd });
+
+        // Gera o resumo dos horários agrupados
+        groupedSlots.forEach(function(slot) {
             var start = moment(slot.start).format('DD/MM/YYYY HH:mm');
             var end = moment(slot.end).format('DD/MM/YYYY HH:mm');
             summaryText += `Data e Hora: ${start} até ${end}\n`;
@@ -144,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
             `Valor total: R$ ${total.toFixed(2)}`
         );
 
-        var whatsappNumber = '+5581999298108'; // Substitua pelo número da professora
+        var whatsappNumber = '5581999298108'; // Substitua pelo número da professora
         var whatsappURL = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
         contactButton.href = whatsappURL;
 
