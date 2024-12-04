@@ -38,6 +38,9 @@ function initializeCalendar() {
     // Variável para armazenar o evento atual sendo editado
     var currentEvent = null;
 
+    // Flag para gerenciar a interação entre select e eventClick
+    var eventClicked = false;
+
     // Inicializa o calendário
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: isMobile() ? 'timeGridDay' : 'timeGridWeek',
@@ -45,7 +48,7 @@ function initializeCalendar() {
         timeZone: 'local',
         height: 'auto',
         allDaySlot: false,
-        slotDuration: '00:30:00',
+        slotDuration: '00:30:00', // Mantido consistente
         slotLabelInterval: '01:00',
         slotMinTime: '08:00:00',
         slotMaxTime: '21:00:00',
@@ -56,13 +59,20 @@ function initializeCalendar() {
         },
         editable: true,
         selectable: true,
-        longPressDelay: 0,
-        selectLongPressDelay: 0,
-        eventLongPressDelay: 0,
+        // Ajuste dos delays para evitar conflitos
+        longPressDelay: 1, // 100 ms
+        selectLongPressDelay: 1, // 100 ms
+        eventLongPressDelay: 1, // 100 ms
         dragScroll: false,
         selectOverlap: false,
         eventOverlap: false,
         select: function(info) {
+            // Se um evento foi clicado recentemente, ignore a seleção
+            if (eventClicked) {
+                eventClicked = false;
+                return;
+            }
+
             // Verifica se já há um slot selecionado na faixa
             var overlap = selectedSlots.some(function(slot) {
                 return (info.start < slot.end && info.end > slot.start);
@@ -92,8 +102,16 @@ function initializeCalendar() {
             registerButton.classList.remove('hidden');
 
             calendar.unselect();
+
+            // Mantém o botão sempre visível em dispositivos móveis
+            if (isMobile()) {
+                registerButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         },
         eventClick: function(info) {
+            // Define a flag para indicar que um evento foi clicado
+            eventClicked = true;
+
             if (info.event.title === 'Selecionado') {
                 // Remove da lista de seleções temporárias
                 selectedSlots = selectedSlots.filter(function(slot) {
@@ -113,9 +131,19 @@ function initializeCalendar() {
                 document.getElementById('edit-event-title').value = info.event.title; // Preenche o input com o título atual
                 openEditPopup(); // Abre o popup de edição
             }
+
+            // Resetar a flag após um breve intervalo
+            setTimeout(function() {
+                eventClicked = false;
+            }, 300); // 300 ms
         },
         events: []
     });
+
+    // Adiciona classe ao calendário em dispositivos móveis
+    if (isMobile()) {
+        calendarEl.classList.add('mobile-calendar');
+    }
 
     // Renderiza o calendário
     calendar.render();
@@ -189,8 +217,6 @@ function initializeCalendar() {
                 end: slot.end.toISOString(),
                 allDay: false
             });
-
-            // Adiciona o evento ao calendário
         });
 
         // Limpa as seleções
@@ -269,4 +295,20 @@ function initializeCalendar() {
             }
         }
     };
+
+    // Ajusta a visualização ao redimensionar a janela
+    window.addEventListener('resize', function() {
+        var wasMobile = calendarEl.classList.contains('mobile-calendar');
+        var nowMobile = isMobile();
+
+        if (wasMobile && !nowMobile) {
+            calendarEl.classList.remove('mobile-calendar');
+            calendar.changeView('timeGridWeek');
+        } else if (!wasMobile && nowMobile) {
+            calendarEl.classList.add('mobile-calendar');
+            calendar.changeView('timeGridDay');
+        }
+    });
 }
+
+
