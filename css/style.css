@@ -12,7 +12,7 @@
 /* Fonte global e cores de fundo e texto */
 html, body {
     font-family: 'Poppins', sans-serif;
-    background-color: #f9f9f9;
+    background-color: #fff5fb;
     color: #333;
     height: 100%;
     overflow-x: hidden;
@@ -23,6 +23,11 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+}
+
+.fc-day-today {
+    background-color: #ffe2f8 !important; /* Substitua pelo código da cor desejada */
+    color: #333; /* Ajuste a cor do texto, se necessário */
 }
 
 /* Container principal para centralizar o conteúdo */

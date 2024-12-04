@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         selectable: !isMobile(), // Desabilita seleção em dispositivos móveis
         selectOverlap: false,
+        nowIndicator: true,
         eventOverlap: false,
         select: function(info) {
             // Handler para seleção em desktops
