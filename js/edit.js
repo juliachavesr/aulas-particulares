@@ -58,6 +58,7 @@ function initializeCalendar() {
         selectable: true,
         longPressDelay: 0,
         selectLongPressDelay: 0,
+        eventLongPressDelay: 0,
         dragScroll: false,
         selectOverlap: false,
         eventOverlap: false,

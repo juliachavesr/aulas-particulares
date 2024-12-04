@@ -9,6 +9,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Array para armazenar as seleções
     var selectedSlots = [];
 
+    // Função para verificar se o dispositivo é móvel
+    function isMobile() {
+        return window.innerWidth <= 768;
+    }
+
     // Inicializa o calendário
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: isMobile() ? 'timeGridDay' : 'timeGridWeek',
@@ -16,8 +21,8 @@ document.addEventListener('DOMContentLoaded', function() {
         timeZone: 'local',
         height: 'auto',
         allDaySlot: false,
-        slotDuration: '00:30:00',
-        slotLabelInterval: '01:00',
+        slotDuration: isMobile() ? '01:00:00' : '00:30:00',
+        slotLabelInterval: isMobile() ? '02:00' : '01:00',
         slotMinTime: '08:00:00',
         slotMaxTime: '21:00:00',
         headerToolbar: {
@@ -25,8 +30,10 @@ document.addEventListener('DOMContentLoaded', function() {
             center: 'title',
             right: 'timeGridDay,listWeek,timeGridWeek'
         },
-        selectable: true, // Permite selecionar horários com clique simples
-        longPressDelay: 0, // Remove a necessidade de segurar
+        selectable: true,
+        longPressDelay: 0,
+        selectLongPressDelay: 0,
+        eventLongPressDelay: 0,
         selectOverlap: false,
         eventOverlap: false,
         select: function(info) {
@@ -81,6 +88,11 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         events: []
     });
+
+    // Adiciona classe ao calendário em dispositivos móveis
+    if (isMobile()) {
+        calendarEl.classList.add('mobile-calendar');
+    }
 
     // Renderiza o calendário
     calendar.render();
