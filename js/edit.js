@@ -3,7 +3,6 @@
 // Configuração do Firebase
 // Certifique-se de substituir as configurações abaixo pelas suas próprias configurações do Firebase
 
-
 // Verifica o estado de autenticação do usuário
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
@@ -53,7 +52,7 @@ function initializeCalendar() {
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
-            right: isMobile() ? 'timeGridDay,listWeek' : 'timeGridWeek,timeGridDay'
+            right: 'timeGridDay,timeGridWeek,listWeek' 
         },
         editable: true,
         selectable: true,
@@ -77,14 +76,14 @@ function initializeCalendar() {
             // Adiciona o slot à lista de seleções
             selectedSlots.push({ start: info.start, end: info.end });
 
-            // Adiciona um evento de fundo para destacar a seleção
+            // Adiciona um evento para destacar a seleção
             calendar.addEvent({
                 title: 'Selecionado',
                 start: info.start,
                 end: info.end,
                 allDay: false,
-                display: 'background',
-                backgroundColor: '#ff4081',
+                color: '#d81b60', // Alinhado com a paleta
+                classNames: ['selected-slot'],
                 overlap: false
             });
 
@@ -100,7 +99,7 @@ function initializeCalendar() {
                     return !(slot.start.getTime() === info.event.start.getTime() && slot.end.getTime() === info.event.end.getTime());
                 });
 
-                // Remove o evento de fundo do calendário
+                // Remove o evento do calendário
                 info.event.remove();
 
                 // Oculta o botão se não houver mais seleções
@@ -191,13 +190,6 @@ function initializeCalendar() {
             });
 
             // Adiciona o evento ao calendário
-            calendar.addEvent({
-                id: newEventRef.key,
-                title: title,
-                start: slot.start,
-                end: slot.end,
-                allDay: false
-            });
         });
 
         // Limpa as seleções
