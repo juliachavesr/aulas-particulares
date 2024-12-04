@@ -31,9 +31,9 @@ document.addEventListener('DOMContentLoaded', function() {
             right: 'timeGridDay,listWeek,timeGridWeek'
         },
         selectable: true,
-        longPressDelay: 100,
-        selectLongPressDelay: 100,
-        eventLongPressDelay: 100,
+        longPressDelay: 0,
+        selectLongPressDelay: 0,
+        eventLongPressDelay: 0,
         selectOverlap: false,
         eventOverlap: false,
         select: function(info) {
