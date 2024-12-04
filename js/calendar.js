@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Array para armazenar as seleções
     var selectedSlots = [];
 
+    // Flag para gerenciar a interação entre select e eventClick
+    var eventClicked = false;
+
     // Função para verificar se o dispositivo é móvel
     function isMobile() {
         return window.innerWidth <= 768;
@@ -21,8 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
         timeZone: 'local',
         height: 'auto',
         allDaySlot: false,
-        slotDuration: isMobile() ? '01:00:00' : '00:30:00',
-        slotLabelInterval: isMobile() ? '02:00' : '01:00',
+        slotDuration: '00:30:00', // Mantido consistente
+        slotLabelInterval: '01:00',
         slotMinTime: '08:00:00',
         slotMaxTime: '21:00:00',
         headerToolbar: {
@@ -31,12 +34,19 @@ document.addEventListener('DOMContentLoaded', function() {
             right: 'timeGridDay,listWeek,timeGridWeek'
         },
         selectable: true,
-        longPressDelay: 0,
-        selectLongPressDelay: 0,
-        eventLongPressDelay: 0,
+        // Ajuste dos delays para evitar conflitos
+        longPressDelay: 1, // 100 ms
+        selectLongPressDelay: 1, // 100 ms
+        eventLongPressDelay: 1, // 100 ms
         selectOverlap: false,
         eventOverlap: false,
         select: function(info) {
+            // Se um evento foi clicado recentemente, ignore a seleção
+            if (eventClicked) {
+                eventClicked = false;
+                return;
+            }
+
             // Verifica se já há um slot selecionado na faixa
             var overlap = selectedSlots.some(function(slot) {
                 return (info.start < slot.end && info.end > slot.start);
@@ -71,6 +81,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         },
         eventClick: function(info) {
+            // Define a flag para indicar que um evento foi clicado
+            eventClicked = true;
+
             if (info.event.title === 'Selecionado') {
                 // Remove da lista de seleções
                 selectedSlots = selectedSlots.filter(function(slot) {
@@ -85,6 +98,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     requestButton.classList.add('hidden');
                 }
             }
+
+            // Resetar a flag após um breve intervalo
+            setTimeout(function() {
+                eventClicked = false;
+            }, 300); // 300 ms
         },
         events: []
     });
@@ -200,8 +218,18 @@ document.addEventListener('DOMContentLoaded', function() {
         closeAppointmentPopup();
     };
 
-    // Função para verificar se o dispositivo é móvel
-    function isMobile() {
-        return window.innerWidth <= 768;
-    }
+    // Ajusta a visualização ao redimensionar a janela
+    window.addEventListener('resize', function() {
+        var wasMobile = calendarEl.classList.contains('mobile-calendar');
+        var nowMobile = isMobile();
+
+        if (wasMobile && !nowMobile) {
+            calendarEl.classList.remove('mobile-calendar');
+            calendar.changeView('timeGridWeek');
+        } else if (!wasMobile && nowMobile) {
+            calendarEl.classList.add('mobile-calendar');
+            calendar.changeView('timeGridDay');
+        }
+    });
 });
+
