@@ -60,6 +60,7 @@ function initializeCalendar() {
         selectable: true, // Desabilita seleção via arrastar em dispositivos móveis
         selectOverlap: false,
         eventOverlap: false,
+        longPressDelay: 50, // Define o tempo para ativar o long press
         select: function(info) {
             // Handler para seleção em desktops
             handleSelection(info.start, info.end);
@@ -300,7 +301,7 @@ function initializeCalendar() {
         } else if (!wasMobile && nowMobile) {
             calendarEl.classList.add('mobile-calendar');
             calendar.changeView('timeGridDay');
-            calendar.setOption('selectable', false);
+            calendar.setOption('selectable', true);
         }
     });
 }
