@@ -141,7 +141,6 @@ function initializeCalendar() {
         });
 
         if (overlap) {
-            alert('Esse horário já está selecionado.');
             return;
         }
 
