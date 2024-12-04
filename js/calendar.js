@@ -5,15 +5,18 @@ document.addEventListener('DOMContentLoaded', function() {
     var appointmentSummary = document.getElementById('appointment-summary');
     var totalValue = document.getElementById('total-value');
     var contactButton = document.getElementById('contact-button');
+    var copyPixButton = document.getElementById('copy-pix-button'); // Botão Pix dentro do popup
 
     // Array para armazenar as seleções
     var selectedSlots = [];
 
     // Função para verificar se o dispositivo é móvel
     function isMobile() {
-        return true;
+        return window.innerWidth <= 768; // Ajuste conforme necessário
     }
 
+    // Código Pix a ser copiado
+    const PIX_CODE = '00020126330014br.gov.bcb.pix0111709076114275204000053039865802BR5925MARIA JULIA CHAVES RODRIG6009Sao Paulo62070503***6304F154';
     // Inicializa o calendário
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: isMobile() ? 'timeGridDay' : 'timeGridWeek',
@@ -224,5 +227,35 @@ document.addEventListener('DOMContentLoaded', function() {
             calendar.changeView('timeGridDay');
             calendar.setOption('selectable', false);
         }
+    });
+
+    // Função para copiar o código Pix para a área de transferência
+    copyPixButton.addEventListener('click', function() {
+        // Cria um elemento temporário para copiar o texto
+        var tempInput = document.createElement('input');
+        tempInput.value = PIX_CODE;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        tempInput.setSelectionRange(0, 99999); // Para dispositivos móveis
+
+        try {
+            var successful = document.execCommand('copy');
+            if (successful) {
+                // Feedback visual ao usuário (mantém o estilo dos botões existentes)
+                copyPixButton.classList.add('copied');
+                copyPixButton.querySelector('span').textContent = 'Copiado!';
+                setTimeout(function() {
+                    copyPixButton.classList.remove('copied');
+                    copyPixButton.querySelector('span').textContent = 'Copiar Pix';
+                }, 2000);
+            } else {
+                console.error('Falha ao copiar o código Pix.');
+            }
+        } catch (err) {
+            console.error('Erro ao copiar o código Pix:', err);
+        }
+
+        // Remove o elemento temporário
+        document.body.removeChild(tempInput);
     });
 });

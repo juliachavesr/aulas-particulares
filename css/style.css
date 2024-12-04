@@ -17,7 +17,7 @@ html, body {
     height: 100%;
     overflow-x: hidden;
 }
-
+    
 /* Layout flexível para o corpo */
 body {
     display: flex;
@@ -668,3 +668,56 @@ footer {
         cursor: pointer;
     }
 }
+/* Botão de Copiar Pix dentro do Popup */
+.contact-button {
+    display: inline-flex;
+    align-items: center;
+    background-color: #ff66a3;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 0.9em;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: 100%;
+    max-width: 300px;
+}
+
+.contact-button img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+.contact-button span {
+    flex-grow: 1;
+    text-align: center;
+}
+
+/* Hover e Ativo */
+.contact-button:hover {
+    background-color: #e60073;
+}
+
+.contact-button:active {
+    transform: scale(0.98);
+}
+
+/* Feedback de Cópia */
+.contact-button.copied {
+    background-color: #28a745; /* Verde para indicar sucesso */
+}
+
+.contact-button.copied span {
+    margin-left: 10px;
+}
+
+
+.contact-button img {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+

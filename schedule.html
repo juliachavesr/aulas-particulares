@@ -29,21 +29,23 @@
         <!-- Popup para exibir o resumo do agendamento -->
         <div id="appointment-popup" class="popup">
             <div class="popup-content">
-                <span class="close-button" onclick="closeAppointmentPopup()">&times;</span>
+                <button class="close-button" onclick="closeAppointmentPopup()">&times;</button>
                 <h2>Resumo do Agendamento</h2>
                 <p id="appointment-summary"></p>
                 <p id="total-value"></p>
                 <div class="popup-actions">
-                
-                    <!-- Exemplo de uso do botão de contato em suas páginas (e.g., schedule.html ou edit.html) -->
-                        <a id="contact-button" href="https://wa.me/5581999298108?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20aula.%0A%0AData%20e%20Hora%3A%2004%2F12%2F2024%2011%3A30%20at%C3%A9%2004%2F12%2F2024%2012%3A00%0A%0AValor%20total%3A%20R%24%2025.00" target="_blank">
-                            <img src="assets/images/whatsapp-icon.png" alt="WhatsApp Icon">
-                            Entrar em Contato
-                        </a>
-
+                    <!-- Botão de contato via WhatsApp -->
+                    <a id="contact-button" href="https://wa.me/5581999298108?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20aula.%0A%0AData%20e%20Hora%3A%2004%2F12%2F2024%2011%3A30%20at%C3%A9%2004%2F12%2F2024%2012%3A00%0A%0AValor%20total%3A%20R%24%2025.00" target="_blank" class="contact-button">
+                        <img src="assets/images/whatsapp-icon.png" alt="WhatsApp Icon">
+                        <span>Entrar em Contato</span>
+                    </a>
+                    
+                    <!-- Botão para copiar o código Pix -->
+                    <button id="copy-pix-button" class="contact-button">
+                        <img src="assets/images/logo-pix.png" alt="Pix Icon">
+                        <span>Copiar Código Pix</span>
+                    </button>
                 </div>
-                <div id="calendar"></div>
-                
             </div>
         </div>
     </div>
