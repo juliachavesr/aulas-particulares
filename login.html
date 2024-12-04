@@ -1,24 +1,111 @@
-<!-- login.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login da Professora</title>
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Fonte global e cores de fundo e texto */
+        html, body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Página de login */
+        .login-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #login-form {
+            width: 90%;
+            max-width: 400px;
+            background-color: #fff;
+            padding: 30px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        #login-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #cc0066;
+            font-size: 1.8em;
+        }
+
+        #login-form input {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border: 1px solid #ff80bf;
+            border-radius: 25px;
+            font-size: 1em;
+            outline: none;
+            color: #333;
+        }
+
+        #login-form input:focus {
+            border-color: #ff66a3;
+        }
+
+        #login-form button {
+            width: 100%;
+            margin-top: 20px;
+            background-color: #ff66a3;
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #login-form button:hover {
+            background-color: #e60073;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            #login-form {
+                padding: 20px 15px;
+            }
+
+            #login-form h2 {
+                font-size: 1.5em;
+            }
+
+            #login-form input {
+                padding: 10px 12px;
+                font-size: 0.9em;
+            }
+
+            #login-form button {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
 </head>
 <body class="login-page">
-    <header>
-        <h1>Área da Professora</h1>
-    </header>
-
-    <main>
-        <form id="login-form">
-            <h2>Login</h2>
-            <input type="email" id="email" placeholder="Email" required>
-            <input type="password" id="password" placeholder="Senha" required>
-            <button type="submit">Entrar</button>
-        </form>
-    </main>
+    <form id="login-form">
+        <h2>Login</h2>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Senha" required>
+        <button type="submit">Entrar</button>
+    </form>
 
     <!-- Scripts -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>

@@ -38,9 +38,6 @@ function initializeCalendar() {
     // Variável para armazenar o evento atual sendo editado
     var currentEvent = null;
 
-    // Flag para gerenciar a interação entre select e eventClick
-    var eventClicked = false;
-
     // Inicializa o calendário
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: isMobile() ? 'timeGridDay' : 'timeGridWeek',
@@ -58,60 +55,23 @@ function initializeCalendar() {
             right: 'timeGridDay,timeGridWeek,listWeek' 
         },
         editable: true,
-        selectable: true,
-        // Ajuste dos delays para evitar conflitos
-        longPressDelay: 1, // 100 ms
-        selectLongPressDelay: 1, // 100 ms
-        eventLongPressDelay: 1, // 100 ms
-        dragScroll: false,
+        selectable: !isMobile(), // Desabilita seleção via arrastar em dispositivos móveis
         selectOverlap: false,
         eventOverlap: false,
         select: function(info) {
-            // Se um evento foi clicado recentemente, ignore a seleção
-            if (eventClicked) {
-                eventClicked = false;
-                return;
-            }
-
-            // Verifica se já há um slot selecionado na faixa
-            var overlap = selectedSlots.some(function(slot) {
-                return (info.start < slot.end && info.end > slot.start);
-            });
-
-            if (overlap) {
-                alert('Esse horário já está selecionado.');
-                calendar.unselect();
-                return;
-            }
-
-            // Adiciona o slot à lista de seleções
-            selectedSlots.push({ start: info.start, end: info.end });
-
-            // Adiciona um evento para destacar a seleção
-            calendar.addEvent({
-                title: 'Selecionado',
-                start: info.start,
-                end: info.end,
-                allDay: false,
-                color: '#d81b60', // Alinhado com a paleta
-                classNames: ['selected-slot'],
-                overlap: false
-            });
-
-            // Mostra o botão de registrar disponibilidade
-            registerButton.classList.remove('hidden');
-
+            // Handler para seleção em desktops
+            handleSelection(info.start, info.end);
             calendar.unselect();
-
-            // Mantém o botão sempre visível em dispositivos móveis
+        },
+        dateClick: function(info) {
             if (isMobile()) {
-                registerButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                // Handler para seleção em dispositivos móveis
+                var start = info.date;
+                var end = new Date(start.getTime() + 30 * 60 * 1000); // Adiciona 30 minutos
+                handleSelection(start, end);
             }
         },
         eventClick: function(info) {
-            // Define a flag para indicar que um evento foi clicado
-            eventClicked = true;
-
             if (info.event.title === 'Selecionado') {
                 // Remove da lista de seleções temporárias
                 selectedSlots = selectedSlots.filter(function(slot) {
@@ -131,11 +91,6 @@ function initializeCalendar() {
                 document.getElementById('edit-event-title').value = info.event.title; // Preenche o input com o título atual
                 openEditPopup(); // Abre o popup de edição
             }
-
-            // Resetar a flag após um breve intervalo
-            setTimeout(function() {
-                eventClicked = false;
-            }, 300); // 300 ms
         },
         events: []
     });
@@ -174,6 +129,41 @@ function initializeCalendar() {
         // Adiciona os eventos carregados
         calendar.addEventSource(events);
     });
+
+    // Função para lidar com a seleção de horários
+    function handleSelection(start, end) {
+        // Verifica se já há um slot selecionado na faixa
+        var overlap = selectedSlots.some(function(slot) {
+            return (start < slot.end && end > slot.start);
+        });
+
+        if (overlap) {
+            alert('Esse horário já está selecionado.');
+            return;
+        }
+
+        // Adiciona o slot à lista de seleções
+        selectedSlots.push({ start: start, end: end });
+
+        // Adiciona um evento para destacar a seleção
+        calendar.addEvent({
+            title: 'Selecionado',
+            start: start,
+            end: end,
+            allDay: false,
+            color: '#d81b60', // Alinhado com a paleta
+            classNames: ['selected-slot'],
+            overlap: false
+        });
+
+        // Mostra o botão de registrar disponibilidade
+        registerButton.classList.remove('hidden');
+
+        // Mantém o botão sempre visível em dispositivos móveis
+        if (isMobile()) {
+            registerButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
 
     // Função para abrir o popup de registro
     window.openRegisterPopup = function() {
@@ -296,7 +286,7 @@ function initializeCalendar() {
         }
     };
 
-    // Ajusta a visualização ao redimensionar a janela
+    // Ajusta a visualização e configurações ao redimensionar a janela
     window.addEventListener('resize', function() {
         var wasMobile = calendarEl.classList.contains('mobile-calendar');
         var nowMobile = isMobile();
@@ -304,11 +294,11 @@ function initializeCalendar() {
         if (wasMobile && !nowMobile) {
             calendarEl.classList.remove('mobile-calendar');
             calendar.changeView('timeGridWeek');
+            calendar.setOption('selectable', true);
         } else if (!wasMobile && nowMobile) {
             calendarEl.classList.add('mobile-calendar');
             calendar.changeView('timeGridDay');
+            calendar.setOption('selectable', false);
         }
     });
 }
-
-
