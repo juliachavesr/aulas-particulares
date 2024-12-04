@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Função para verificar se o dispositivo é móvel
     function isMobile() {
-        return window.innerWidth <= 768;
+        return true;
     }
 
     // Inicializa o calendário
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var event = childSnapshot.val();
             events.push({
                 id: childSnapshot.key,
-                title: event.title,
+                title: "Horário Ocupado",
                 start: event.start,
                 end: event.end,
                 allDay: event.allDay
