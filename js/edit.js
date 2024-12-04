@@ -57,7 +57,7 @@ function initializeCalendar() {
             right: 'timeGridDay,timeGridWeek,listWeek' 
         },
         editable: true,
-        selectable: !isMobile(), // Desabilita seleção via arrastar em dispositivos móveis
+        selectable: true, // Desabilita seleção via arrastar em dispositivos móveis
         selectOverlap: false,
         eventOverlap: false,
         select: function(info) {
