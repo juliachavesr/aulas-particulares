@@ -45,6 +45,7 @@ function initializeCalendar() {
         timeZone: 'local',
         height: 'auto',
         nowIndicator: true,
+        isLongPress: true,
         allDaySlot: false,
         slotDuration: '00:30:00', // Mantido consistente
         slotLabelInterval: '01:00',
