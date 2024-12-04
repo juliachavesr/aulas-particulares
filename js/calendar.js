@@ -1,6 +1,3 @@
-// js/calendar.js
-
-// Função para verificar se o dispositivo é móvel
 function isMobile() {
     return window.innerWidth <= 768;
 }
@@ -32,51 +29,39 @@ document.addEventListener('DOMContentLoaded', function() {
             center: 'title',
             right: isMobile() ? 'timeGridDay,listWeek' : 'timeGridWeek,timeGridDay'
         },
-        selectable: true,
-        longPressDelay: 0,
-        selectLongPressDelay: 0, 
-        dragScroll: false,
-        selectOverlap: false,
+        selectable: false, // Desativado para usar apenas o dateClick
         eventOverlap: false,
-        select: function(info) {
-            // Verifica se já há um slot selecionado na faixa
-            var overlap = selectedSlots.some(function(slot) {
-                return (info.start < slot.end && info.end > slot.start);
-            });
+        dateClick: function(info) {
+            // Verifica se o horário já foi selecionado
+            var slotIndex = selectedSlots.findIndex(slot =>
+                slot.start.getTime() === info.date.getTime()
+            );
 
-            if (overlap) {
-                alert('Esse horário já está selecionado.');
-                calendar.unselect();
-                return;
+            if (slotIndex >= 0) {
+                // Remove o horário selecionado
+                selectedSlots.splice(slotIndex, 1);
+                var event = calendar.getEvents().find(e => e.start.getTime() === info.date.getTime());
+                if (event) event.remove();
+            } else {
+                // Adiciona o horário selecionado
+                selectedSlots.push({
+                    start: info.date,
+                    end: new Date(info.date.getTime() + 30 * 60 * 1000)
+                });
+                calendar.addEvent({
+                    title: 'Selecionado',
+                    start: info.date,
+                    end: new Date(info.date.getTime() + 30 * 60 * 1000),
+                    color: '#d81b60',
+                    classNames: ['selected-slot']
+                });
             }
 
-            // Adiciona o slot à lista de seleções
-            selectedSlots.push({ start: info.start, end: info.end });
-
-            // Ordena os slots selecionados
-            selectedSlots.sort(function(a, b) {
-                return a.start - b.start;
-            });
-
-            // Adiciona um evento para destacar a seleção com cor mais forte
-            calendar.addEvent({
-                title: 'Selecionado',
-                start: info.start,
-                end: info.end,
-                allDay: false,
-                color: '#d81b60', // Cor mais forte
-                classNames: ['selected-slot'],
-                overlap: false
-            });
-
-            // Mostra o botão de solicitar agendamento
-            requestButton.classList.remove('hidden');
-
-            calendar.unselect();
-
-            // Mantém o botão sempre visível em dispositivos móveis
-            if (isMobile()) {
-                requestButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Mostra ou oculta o botão de solicitar agendamento
+            if (selectedSlots.length > 0) {
+                requestButton.classList.remove('hidden');
+            } else {
+                requestButton.classList.add('hidden');
             }
         },
         eventClick: function(info) {
@@ -203,4 +188,9 @@ document.addEventListener('DOMContentLoaded', function() {
     window.modifySelection = function() {
         closeAppointmentPopup();
     };
+
+    // Função para verificar se o dispositivo é móvel
+    function isMobile() {
+        return window.innerWidth <= 768;
+    }
 });

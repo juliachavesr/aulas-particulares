@@ -628,3 +628,22 @@ footer {
     border-radius: 5px;
     padding: 2px 4px;
 }
+.calendar-controls {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.calendar-controls button {
+    background-color: #ff66a3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.calendar-controls button:hover {
+    background-color: #e60073;
+}
